@@ -15,7 +15,7 @@ steps:
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'ScoutAsia Engineering Dev-APJ (sae-mlp-sea-rg)'
-    scriptType: 'pscore'
+    scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
       az storage blob download -c models -f model_deployment.zip -n model_deployment.zip --account-key $AZURE_STORAGE_KEY --account-name $AZURE_STORAGE_ACCOUNT
