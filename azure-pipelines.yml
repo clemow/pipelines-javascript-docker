@@ -18,10 +18,7 @@ steps:
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      $storage_account=Get-AzStorageAccount -name "storageaccountsaemlb740" -ResourceGroupName sae-mlp-sea-rg
-      $ctx=$storage_account.Context
-      $containerName = "models"
-      Get-AzStorageBlobContent -Container $containerName -Blob "model_deployment.zip"  -Context $ctx
+      az storage blob download -c models -f model_deployment.zip -n model_deployment.zip --account-key $AZURE_STORAGE_KEY --account-name $AZURE_STORAGE_ACCOUNT
     failOnStandardError: true
 - script: |
     echo Add other tasks to build, test, and deploy your project.
