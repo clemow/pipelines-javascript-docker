@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'ScoutAsia Engineering Dev-APJ (sae-mlp-sea-rg)'
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      $storage_account=Get-AzStorageAccount -name "storageaccountsaemlb740" -ResourceGroupName sae-mlp-sea-rg
+      $ctx=$storage_account.Context
+      $containerName = "models"
+      Get-AzStorageBlobContent -Container $containerName -Blob "model_deployment.zip"  -Context $ctx
+    failOnStandardError: true
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
